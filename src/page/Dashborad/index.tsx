@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
 
-export default function Dashboard() {
+import { Container, Title } from './styles';
+
+export function Dashboard() {
     return (
-        <View>
-            <Text>Dashboard</Text>
-        </View>
+        <Container>
+            <Title>Dashboard</Title>
+        </Container>
     );
 }
