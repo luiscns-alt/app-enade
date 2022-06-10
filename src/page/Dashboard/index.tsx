@@ -1,9 +1,12 @@
-import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 
 import {
     TransactionCard,
     TransactionCardProps,
 } from '../../components/TransactionCard';
+import {questionsDTO} from '../../dtos/questionsDTO';
+import {api} from '../../services/api';
 
 import {
     Container,
@@ -21,68 +24,39 @@ import {
     TransactionList,
 } from './styles';
 
+import QuestionsData from '../../services/server.json';
+
 export interface DataListProps extends TransactionCardProps {
     id: string;
 }
 
 export function Dashboard() {
-    const data: DataListProps[] = [
-        {
-            id: '1',
-            type: 'positive',
-            title: 'Ciência da Computação',
-            amount: 'Banco de Dados',
-            category: {
-                name: 'N de questão(ões)',
-                // icon: 'dollar-sign',
-            },
-            date: '10/10/2021',
-        },
-        {
-            id: '2',
-            type: 'negative',
-            title: 'Ciência da Computação',
-            amount: 'POO',
-            category: {
-                name: 'N de questão(ões)',
-                // icon: 'coffee',
-            },
-            date: '10/10/2021',
-        },
-        {
-            id: '3',
-            type: 'positive',
-            title: 'Ciência da Computação',
-            amount: 'Programação Web',
-            category: {
-                name: 'N de questão(ões)',
-                // icon: 'shopping-bag',
-            },
-            date: '10/10/2021',
-        },
-        {
-            id: '4',
-            type: 'positive',
-            title: 'Ciência da Computação',
-            amount: 'Programação Web',
-            category: {
-                name: 'N de questão(ões)',
-                // icon: 'shopping-bag',
-            },
-            date: '10/10/2021',
-        },
-        {
-            id: '5',
-            type: 'positive',
-            title: 'Ciência da Computação',
-            amount: 'Programação Web',
-            category: {
-                name: 'N de questão(ões)',
-                // icon: 'shopping-bag',
-            },
-            date: '10/10/2021',
-        },
-    ];
+    const [questionnaires, setQuestionnaires] = useState<questionsDTO[]>([]);
+    const [loading, setLoading] = useState(true);
+    const navigation = useNavigation();
+
+    // const data: DataListProps[] = QuestionsData[];
+    function handleQuestionnaires(quiz: questionsDTO) {
+        // @ts-ignore
+        navigation.navigate('Questionnaires', {quiz});
+    }
+
+    useEffect(() => {
+        async function fetchCars() {
+            try {
+                const response = await api.get('/questions');
+                setQuestionnaires(response.data);
+            } catch (error) {
+                console.log(error);
+            } finally {
+
+                setLoading(false);
+            }
+        }
+
+        fetchCars();
+    }, []);
+
     return (
         <Container>
             <Header>
@@ -98,8 +72,9 @@ export function Dashboard() {
                             <UserName>Name </UserName>
                         </User>
                     </UserInfo>
-                    <LogoutButton onPress={() => {}}>
-                        <Icon name="power" />
+                    <LogoutButton onPress={() => {
+                    }}>
+                        <Icon name="power"/>
                     </LogoutButton>
                 </UserWrapper>
             </Header>
@@ -107,9 +82,14 @@ export function Dashboard() {
             <Transactions>
                 <Title>Listagem</Title>
                 <TransactionList
-                    data={data}
+                    data={questionnaires}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <TransactionCard data={item} />}
+                    renderItem={({item}) => (
+                        <TransactionCard
+                            data={item}
+                            onPress={() => handleQuestionnaires(item)}
+                        />
+                    )}
                 />
             </Transactions>
         </Container>

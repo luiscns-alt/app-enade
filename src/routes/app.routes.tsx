@@ -6,10 +6,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { Dashboard } from '../page/Dashboard';
 import { Register } from '../page/Register';
+import { Questionnaires } from '../page/Questionnaires';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { SignIn } from '../page/Login/SignIn';
+import { SignUp } from '../page/Login/SignUp';
 
 const { Navigator, Screen } = createBottomTabNavigator();
+const SimpleStack = createStackNavigator();
 
-export function AppRoutes() {
+function AppRoutes() {
     const theme = useTheme();
 
     return (
@@ -27,7 +33,7 @@ export function AppRoutes() {
         >
             <Screen
                 name="Listagem"
-                component={Dashboard}
+                component={StackRoutes}
                 options={{
                     tabBarIcon: ({ size, color }) => (
                         <MaterialIcons
@@ -67,3 +73,19 @@ export function AppRoutes() {
         </Navigator>
     );
 }
+
+function StackRoutes() {
+    return (
+        <SimpleStack.Navigator screenOptions={{ headerShown: false }}>
+            <SimpleStack.Screen name="Login" component={SignIn} />
+            <SimpleStack.Screen name="Register" component={SignUp} />
+            <SimpleStack.Screen name="Listagem" component={Dashboard} />
+            <SimpleStack.Screen
+                name="Questionnaires"
+                component={Questionnaires}
+            />
+        </SimpleStack.Navigator>
+    );
+}
+
+export { StackRoutes, AppRoutes };

@@ -9,6 +9,7 @@ import {
     getBottomSpace,
 } from 'react-native-iphone-x-helper';
 import { DataListProps } from '.';
+import { questionsDTO } from '../../dtos/questionsDTO';
 
 export const Container = styled.View`
     flex: 1;
@@ -87,13 +88,16 @@ export const Title = styled.Text`
     margin-bottom: 16px;
 `;
 
-export const TransactionList = styled(
-    FlatList as new (
-        props: FlatListProps<DataListProps>
-    ) => FlatList<DataListProps>
-).attrs({
+export const TransactionList = styled(FlatList as new () => FlatList<questionsDTO>).attrs({
     showsVerticalScrollIndicator: false,
     contentContainerStyle: {
         paddingBottom: getBottomSpace(),
     },
 })``;
+
+// export const CarList = styled(FlatList as new () => FlatList<CarDTO>).attrs({
+//     contentContainerStyle: {
+//         padding: 24,
+//     },
+//     showsVerticalScrollIndicator: false,
+// })``;

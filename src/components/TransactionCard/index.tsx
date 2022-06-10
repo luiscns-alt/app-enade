@@ -1,4 +1,7 @@
 import React from 'react';
+import { RectButtonProps } from 'react-native-gesture-handler';
+import { questionsDTO } from '../../dtos/questionsDTO';
+
 import {
     Container,
     Title,
@@ -23,13 +26,13 @@ export interface TransactionCardProps {
     date: string;
 }
 
-interface Props {
-    data: TransactionCardProps;
+interface Props extends RectButtonProps {
+    data: questionsDTO;
 }
 
-export function TransactionCard({ data }: Props) {
+export function TransactionCard({ data, ...rest }: Props) {
     return (
-        <Container>
+        <Container {...rest}>
             <Title>{data.title}</Title>
 
             <Amount type={data.type}>
