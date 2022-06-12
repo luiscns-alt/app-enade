@@ -12,12 +12,7 @@
             "questionsData": [
                 {
                     "question": "Everything in React is a __________",
-                    "answers": [
-                        "Module",
-                        "Component",
-                        "Hooks",
-                        "Template"
-                    ],
+                    "answers": ["Module", "Component", "Hooks", "Template"],
                     "correctIndex": 1
                 },
                 {
@@ -32,12 +27,7 @@
                 },
                 {
                     "question": "Which of the following acts as the input of a class-based component?",
-                    "answers": [
-                        "Class",
-                        "Factory",
-                        "Render",
-                        "Props"
-                    ],
+                    "answers": ["Class", "Factory", "Render", "Props"],
                     "correctIndex": 3
                 },
                 {
@@ -62,12 +52,7 @@
                 },
                 {
                     "question": "A valid react component can return ...... number of elements. ",
-                    "answers": [
-                        "1",
-                        "2",
-                        "3",
-                        "None of the Above"
-                    ],
+                    "answers": ["1", "2", "3", "None of the Above"],
                     "correctIndex": 0
                 },
                 {
@@ -82,12 +67,7 @@
                 },
                 {
                     "question": "What is the default port for webpack dev server? ",
-                    "answers": [
-                        "3000",
-                        "8080",
-                        "3306",
-                        "8809"
-                    ],
+                    "answers": ["3000", "8080", "3306", "8809"],
                     "correctIndex": 1
                 },
                 {
