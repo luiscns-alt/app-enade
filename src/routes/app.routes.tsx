@@ -32,12 +32,12 @@ function AppRoutes() {
             }}
         >
             <Screen
-                name="Listagem"
+                name='Listagem'
                 component={StackRoutes}
                 options={{
                     tabBarIcon: ({ size, color }) => (
                         <MaterialIcons
-                            name="format-list-bulleted"
+                            name='format-list-bulleted'
                             size={size}
                             color={color}
                         />
@@ -45,12 +45,12 @@ function AppRoutes() {
                 }}
             />
             <Screen
-                name="Cadastrar"
+                name='Cadastrar'
                 component={Register}
                 options={{
                     tabBarIcon: ({ size, color }) => (
                         <MaterialIcons
-                            name="note-add"
+                            name='note-add'
                             size={size}
                             color={color}
                         />
@@ -58,12 +58,12 @@ function AppRoutes() {
                 }}
             />
             <Screen
-                name="Resumo"
+                name='Resumo'
                 component={Register}
                 options={{
                     tabBarIcon: ({ size, color }) => (
                         <MaterialIcons
-                            name="pie-chart"
+                            name='pie-chart'
                             size={size}
                             color={color}
                         />
@@ -77,11 +77,9 @@ function AppRoutes() {
 function StackRoutes() {
     return (
         <SimpleStack.Navigator screenOptions={{ headerShown: false }}>
-            <SimpleStack.Screen name="Login" component={SignIn} />
-            <SimpleStack.Screen name="Register" component={SignUp} />
-            <SimpleStack.Screen name="Listagem" component={Dashboard} />
+            <SimpleStack.Screen name='Listagem' component={Dashboard} />
             <SimpleStack.Screen
-                name="Questionnaires"
+                name='Questionnaires'
                 component={Questionnaires}
             />
         </SimpleStack.Navigator>

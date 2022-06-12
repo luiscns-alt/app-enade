@@ -31,7 +31,7 @@ function HomeScreen({ navigation }) {
         >
             <Text> Home screen </Text>{' '}
             <Button
-                title="Go to Details"
+                title='Go to Details'
                 onPress={() => navigation.navigate('Details')}
             />{' '}
         </View>
@@ -49,7 +49,7 @@ function SettingsScreen({ navigation }) {
         >
             <Text> Settings screen </Text>{' '}
             <Button
-                title="Go to Details"
+                title='Go to Details'
                 onPress={() => navigation.navigate('Details')}
             />{' '}
         </View>
@@ -59,8 +59,8 @@ function SettingsScreen({ navigation }) {
 function HomeStackScreen() {
     return (
         <HomeStack.Navigator>
-            <HomeStack.Screen name="Home" component={HomeScreen} />{' '}
-            <HomeStack.Screen name="Details" component={DetailsScreen} />{' '}
+            <HomeStack.Screen name='Home' component={HomeScreen} />{' '}
+            <HomeStack.Screen name='Details' component={DetailsScreen} />{' '}
         </HomeStack.Navigator>
     );
 }
@@ -69,8 +69,8 @@ const SettingsStack = createStackNavigator();
 function SettingsStackScreen() {
     return (
         <SettingsStack.Navigator>
-            <SettingsStack.Screen name="Settings" component={SettingsScreen} />{' '}
-            <SettingsStack.Screen name="Details" component={DetailsScreen} />{' '}
+            <SettingsStack.Screen name='Settings' component={SettingsScreen} />{' '}
+            <SettingsStack.Screen name='Details' component={DetailsScreen} />{' '}
         </SettingsStack.Navigator>
     );
 }
@@ -104,8 +104,8 @@ export default function App() {
                     inactiveTintColor: 'gray',
                 }}
             >
-                <Tab.Screen name="Home" component={HomeStackScreen} />{' '}
-                <Tab.Screen name="Settings" component={SettingsStackScreen} />{' '}
+                <Tab.Screen name='Home' component={HomeStackScreen} />{' '}
+                <Tab.Screen name='Settings' component={SettingsStackScreen} />{' '}
             </Tab.Navigator>{' '}
         </NavigationContainer>
     );

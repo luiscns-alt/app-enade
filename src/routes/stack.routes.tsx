@@ -7,7 +7,7 @@ const { Navigator, Screen } = createStackNavigator();
 export function Stac() {
     return (
         <Navigator screenOptions={{ headerShown: false }}>
-            <Screen name="Questionnaires" component={Questionnaires} />
+            <Screen name='Questionnaires' component={Questionnaires} />
         </Navigator>
     );
 }
