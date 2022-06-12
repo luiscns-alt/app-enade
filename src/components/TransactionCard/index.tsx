@@ -19,7 +19,6 @@ interface Category {
 }
 
 export interface TransactionCardProps {
-    type: 'positive' | 'negative';
     title: string;
     amount: string;
     category: Category;
@@ -33,19 +32,17 @@ interface Props extends RectButtonProps {
 export function TransactionCard({ data, ...rest }: Props) {
     return (
         <Container {...rest}>
-            <Title>{data.title}</Title>
-
-            <Amount type={data.type}>
-                {data.type === 'negative' && '- '}
-                {data.amount}
-            </Amount>
+            <Title>Título: </Title>
+            <Amount>{data.title}</Amount>
+            <Title>Descrição: </Title>
+            <Title>{data.description}</Title>
 
             <Footer>
                 <Category>
                     {/* <Icon name={data.category.icon} /> */}
-                    <CategoryName>{data.category.name}</CategoryName>
+                    <CategoryName>{data.totalItems}</CategoryName>
                 </Category>
-                <Date>{data.date}</Date>
+                <Date>{data.isActive}</Date>
             </Footer>
         </Container>
     );
