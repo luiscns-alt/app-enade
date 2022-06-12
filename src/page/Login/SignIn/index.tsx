@@ -19,6 +19,7 @@ import {
     Title,
 } from './styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useAuth } from '../../../contexts/auth';
 
 interface FormData {
     username: string;
@@ -32,6 +33,7 @@ const schema = Yup.object().shape({
 
 export function SignIn() {
     const { navigate } = useNavigation();
+    const { signIn } = useAuth();
     const {
         control,
         handleSubmit,
@@ -42,11 +44,16 @@ export function SignIn() {
 
     function handleRegister(form: FormData) {
         const data = {
-            name: form.username,
-            amount: form.password,
+            username: form.username,
+            password: form.password,
         };
-        console.log(data);
+        // console.log(data);
+        signIn(data);
     }
+
+    // function handleSign() {
+    //     signIn();
+    // }
 
     function handleRegistration() {
         navigate('Register');
@@ -56,27 +63,27 @@ export function SignIn() {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Container>
                 <Header>
-                    <Title>Bem Vindo</Title>
+                    <Title>Login</Title>
                 </Header>
 
                 <Form>
                     <Fields>
                         <InputForm
-                            name="username"
+                            name='username'
                             control={control}
-                            placeholder="Email"
+                            placeholder='Email'
                             // autoCapitalize="sentences"
                             autoCorrect={false}
-                            autoCapitalize="none"
-                            autoCompleteType="email"
-                            textContentType="emailAddress"
-                            keyboardType="email-address"
+                            autoCapitalize='none'
+                            autoCompleteType='email'
+                            textContentType='emailAddress'
+                            keyboardType='email-address'
                             error={errors.username && errors.username.message}
                         />
                         <InputForm
-                            name="password"
+                            name='password'
                             control={control}
-                            placeholder="Senha"
+                            placeholder='Senha'
                             // autoCapitalize="sentences"
                             // autoCorrect={false}
                             secureTextEntry
@@ -85,7 +92,8 @@ export function SignIn() {
                     </Fields>
                     <Button
                         onPress={handleSubmit(handleRegister)}
-                        title="Login"
+                        // onPress={handleSign}
+                        title='Login'
                     />
                 </Form>
                 <Row>

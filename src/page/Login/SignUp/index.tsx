@@ -19,19 +19,25 @@ import {
     Title,
 } from './styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useAuth } from '../../../contexts/auth';
 
 interface FormData {
-    username: string;
+    name: string;
+    email: string;
     password: string;
+    confirmPassword: string;
 }
 
 const schema = Yup.object().shape({
-    username: Yup.string().required('Nome é obrigatório'),
+    name: Yup.string().required('Nome é obrigatório'),
+    email: Yup.string().required('E-mail é obrigatório'),
     password: Yup.string().required('Senha é obrigatório'),
+    confirmPassword: Yup.string().required('Confirme a Senha é obrigatório'),
 });
 
 export function SignUp() {
     const { navigate } = useNavigation();
+    const { registerUser } = useAuth();
     const {
         control,
         handleSubmit,
@@ -42,50 +48,75 @@ export function SignUp() {
 
     function handleRegister(form: FormData) {
         const data = {
-            name: form.username,
-            amount: form.password,
+            name: form.name,
+            email: form.email,
+            password: form.password,
+            confirm: form.confirmPassword,
         };
-        console.log(data);
+        // console.log(data);
+        registerUser(data);
     }
 
     function handleLogin() {
-        navigate('Login');
+        navigate('SignIn');
     }
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Container>
                 <Header>
-                    <Title>Bem Vindo</Title>
+                    <Title>Cadastro</Title>
                 </Header>
 
                 <Form>
                     <Fields>
                         <InputForm
-                            name="username"
+                            name='name'
                             control={control}
-                            placeholder="Email"
-                            // autoCapitalize="sentences"
+                            placeholder='Nome'
                             autoCorrect={false}
-                            autoCapitalize="none"
-                            autoCompleteType="email"
-                            textContentType="emailAddress"
-                            keyboardType="email-address"
-                            error={errors.username && errors.username.message}
+                            autoCapitalize='none'
+                            // autoCompleteType="email"
+                            // textContentType="emailAddress"
+                            keyboardType='default'
+                            error={errors.name && errors.name.message}
                         />
                         <InputForm
-                            name="password"
+                            name='email'
                             control={control}
-                            placeholder="Senha"
+                            placeholder='Email'
+                            autoCorrect={false}
+                            autoCapitalize='none'
+                            autoCompleteType='email'
+                            textContentType='emailAddress'
+                            keyboardType='email-address'
+                            error={errors.email && errors.email.message}
+                        />
+                        <InputForm
+                            name='password'
+                            control={control}
+                            placeholder='Senha'
                             // autoCapitalize="sentences"
                             // autoCorrect={false}
                             secureTextEntry
                             error={errors.password && errors.password.message}
                         />
+                        <InputForm
+                            name='confirmPassword'
+                            control={control}
+                            placeholder='Confirme a Senha'
+                            // autoCapitalize="sentences"
+                            // autoCorrect={false}
+                            secureTextEntry
+                            error={
+                                errors.confirmPassword &&
+                                errors.confirmPassword.message
+                            }
+                        />
                     </Fields>
                     <Button
                         onPress={handleSubmit(handleRegister)}
-                        title="Login"
+                        title='Cadastrar'
                     />
                 </Form>
                 <Row>

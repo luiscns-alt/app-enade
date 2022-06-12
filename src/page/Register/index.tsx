@@ -56,25 +56,25 @@ export function Register() {
                 <Form>
                     <Fields>
                         <InputForm
-                            name="name"
+                            name='name'
                             control={control}
-                            placeholder="Questão"
-                            autoCapitalize="sentences"
+                            placeholder='Questão'
+                            autoCapitalize='sentences'
                             autoCorrect={false}
                             error={errors.name && errors.name.message}
                         />
                         <InputForm
-                            name="amount"
+                            name='amount'
                             control={control}
-                            placeholder="Resposta"
-                            autoCapitalize="sentences"
+                            placeholder='Resposta'
+                            autoCapitalize='sentences'
                             autoCorrect={false}
                             error={errors.amount && errors.amount.message}
                         />
                     </Fields>
                     <Button
                         onPress={handleSubmit(handleRegister)}
-                        title="Enviar"
+                        title='Enviar'
                     />
                 </Form>
             </Container>

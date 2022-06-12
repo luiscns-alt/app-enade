@@ -88,7 +88,9 @@ export const Title = styled.Text`
     margin-bottom: 16px;
 `;
 
-export const TransactionList = styled(FlatList as new () => FlatList<questionsDTO>).attrs({
+export const TransactionList = styled(
+    FlatList as new () => FlatList<questionsDTO>
+).attrs({
     showsVerticalScrollIndicator: false,
     contentContainerStyle: {
         paddingBottom: getBottomSpace(),
