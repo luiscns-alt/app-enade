@@ -56,3 +56,5 @@ dist/
 
 # Yanr
 yarn.lock
+
+pnpm-lock.yaml
