@@ -1,3 +1,6 @@
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
+
 export default {
   colors: {
     primary: '#8E7DBE',
@@ -17,5 +20,10 @@ export default {
     regular: 'Poppins_400Regular',
     medium: 'Poppins_500Medium',
     bold: 'Poppins_700Bold',
+  },
+  SIZES: {
+    base: 10,
+    width,
+    height,
   },
 };
