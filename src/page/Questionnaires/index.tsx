@@ -5,12 +5,12 @@ import { BackButton } from '../../components/BackButton';
 import { questionsDTO } from '../../dtos/questionsDTO';
 
 import {
-    CarImages,
-    Container,
-    Content,
-    Header,
-    Subject,
-    Title,
+  CarImages,
+  Container,
+  Content,
+  Header,
+  Subject,
+  Title,
 } from './styles';
 import { api } from '../../services/api';
 import { TransactionCard } from '../../components/TransactionCard';
@@ -18,47 +18,47 @@ import { TransactionList } from '../Dashboard/styles';
 import { Card } from '../../components/Card';
 
 interface Params {
-    quiz: questionsDTO;
+  quiz: questionsDTO;
 }
 
 export function Questionnaires() {
-    const navigation = useNavigation();
-    const route = useRoute();
-    const { quiz, index } = route.params as Params;
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { quiz, index } = route.params as Params;
 
-    const [questionnaires, setQuestionnaires] = useState<questionsDTO[]>([]);
+  const [questionnaires, setQuestionnaires] = useState<questionsDTO[]>([]);
 
-    function handleBack() {
-        navigation.goBack();
-    }
-    //
-    // function handle() {
-    //
-    //         console.log(quiz.questionsData);
-    //
-    // }
-    //
-    // useEffect(() => {
-    //     handle()
-    // }, []);
+  function handleBack() {
+    navigation.goBack();
+  }
+  //
+  // function handle() {
+  //
+  //         console.log(quiz.questionsData);
+  //
+  // }
+  //
+  // useEffect(() => {
+  //     handle()
+  // }, []);
 
-    return (
-        <Container>
-            <Header>
-                <BackButton onPress={handleBack} />
-            </Header>
-            <CarImages></CarImages>
-            <Content>
-                <Subject>{quiz.title}</Subject>
-                <Title>{quiz.description}</Title>
-            </Content>
-            <Content>
-                <FlatList
-                    data={quiz.questionsData}
-                    keyExtractor={(item) => item}
-                    renderItem={({ item }) => <Card data={item} />}
-                />
-            </Content>
-        </Container>
-    );
+  return (
+    <Container>
+      <Header>
+        <BackButton onPress={handleBack} />
+      </Header>
+      <CarImages></CarImages>
+      <Content>
+        <Subject>{quiz.title}</Subject>
+        <Title>{quiz.description}</Title>
+      </Content>
+      <Content>
+        <FlatList
+          data={quiz.questionsData}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => <Card data={item} />}
+        />
+      </Content>
+    </Container>
+  );
 }

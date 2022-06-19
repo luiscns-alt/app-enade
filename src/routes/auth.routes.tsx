@@ -7,14 +7,14 @@ import { SignIn } from '../page/Login/SignIn';
 const { Navigator, Screen } = createStackNavigator();
 
 export function AuthRoutes() {
-    return (
-        <Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            <Screen name={'SignIn'} component={SignIn} />
-            <Screen name={'Register'} component={SignUp} />
-        </Navigator>
-    );
+  return (
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Screen name={'SignIn'} component={SignIn} />
+      <Screen name={'Register'} component={SignUp} />
+    </Navigator>
+  );
 }

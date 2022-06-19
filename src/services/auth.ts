@@ -1,11 +1,11 @@
 import { api } from './api';
 
 interface Response {
-    token: string;
-    user: {
-        name: string;
-        email: string;
-    };
+  token: string;
+  user: {
+    name: string;
+    email: string;
+  };
 }
 
 // export async function signIn(params) {

@@ -11,7 +11,7 @@ export const TOKEN_KEY = '@RNAuth:token';
 export const isAuthenticated = () => AsyncStorage.getItem(TOKEN_KEY) !== null;
 export const getToken = () => AsyncStorage.getItem(TOKEN_KEY);
 export const api = axios.create({
-    baseURL: 'http://10.0.0.8:3005',
+  baseURL: 'http://10.0.0.8:3005',
 });
 
 // api.interceptors.request.use(async (config) => {
@@ -23,145 +23,142 @@ export const api = axios.create({
 // });
 
 interface User {
-    name: string;
-    email: string;
+  name: string;
+  email: string;
 }
 
 interface AuthContextData {
-    signed: boolean;
-    user: User | null;
-    loading: boolean;
-    signIn(params: any): Promise<void>;
-    signOut(): void;
-    registerUser(params: any): Promise<void>;
-    listQuiz(): Promise<void>;
+  signed: boolean;
+  user: User | null;
+  loading: boolean;
+  signIn(params: any): Promise<void>;
+  signOut(): void;
+  registerUser(params: any): Promise<void>;
+  listQuiz(): Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        async function loadStorageData() {
-            const storagedUser = await AsyncStorage.getItem('@RNAuth:user');
-            const storagedToken = await AsyncStorage.getItem('@RNAuth:token');
+  useEffect(() => {
+    async function loadStorageData() {
+      const storagedUser = await AsyncStorage.getItem('@RNAuth:user');
+      const storagedToken = await AsyncStorage.getItem('@RNAuth:token');
 
-            if (storagedUser && storagedToken) {
-                setUser(JSON.parse(storagedUser));
-                api.defaults.headers.Authorization = `Baerer ${storagedToken}`;
-            }
+      if (storagedUser && storagedToken) {
+        setUser(JSON.parse(storagedUser));
+        api.defaults.headers.Authorization = `Baerer ${storagedToken}`;
+      }
 
-            setLoading(false);
-        }
-
-        loadStorageData();
-    });
-
-    async function signIn(data: any) {
-        try {
-            const response = await api
-                .post(`/auth/login`, data)
-                .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
-                    const token = res.data.access_token;
-
-                    setUser(token);
-
-                    AsyncStorage.setItem('@RNAuth:user', JSON.stringify(token));
-                    AsyncStorage.setItem(TOKEN_KEY, token);
-                })
-                .catch((error) => console.log(error));
-        } catch (error) {
-            return error;
-        }
+      setLoading(false);
     }
 
-    async function signOut() {
-        await AsyncStorage.clear();
-        setUser(null);
+    loadStorageData();
+  });
+
+  async function signIn(data: any) {
+    try {
+      const response = await api
+        .post(`/auth/login`, data)
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          const token = res.data.access_token;
+
+          setUser(token);
+
+          AsyncStorage.setItem('@RNAuth:user', JSON.stringify(token));
+          AsyncStorage.setItem(TOKEN_KEY, token);
+        })
+        .catch((error) => console.log(error));
+    } catch (error) {
+      return error;
     }
+  }
 
-    async function registerUser(params: any) {
-        try {
-            const response = await api
-                .post(`/user/register`, params)
-                .then((res) => {
-                    console.log(res);
-                    console.log(res.data);
-                    if (res && res.data && res.data.access_token) {
-                        const token = res.data.access_token;
+  async function signOut() {
+    await AsyncStorage.clear();
+    setUser(null);
+  }
 
-                        setUser(token);
+  async function registerUser(params: any) {
+    try {
+      const response = await api
+        .post(`/user/register`, params)
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          if (res && res.data && res.data.access_token) {
+            const token = res.data.access_token;
 
-                        AsyncStorage.setItem(
-                            '@RNAuth:user',
-                            JSON.stringify(token)
-                        );
-                        AsyncStorage.setItem(TOKEN_KEY, token);
-                    }
-                })
-                .catch((error) => console.log(error));
-        } catch (error) {
-            return error;
-        }
+            setUser(token);
+
+            AsyncStorage.setItem('@RNAuth:user', JSON.stringify(token));
+            AsyncStorage.setItem(TOKEN_KEY, token);
+          }
+        })
+        .catch((error) => console.log(error));
+    } catch (error) {
+      return error;
     }
+  }
 
-    async function listQuiz() {
-        const token = await AsyncStorage.getItem(TOKEN_KEY);
-        try {
-            await api
-                .get(`/quiz`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                .then((res) => {
-                    // console.log('********THEN**********');
-                    // console.log(res);
-                    // console.log(res.data);
+  async function listQuiz() {
+    const token = await AsyncStorage.getItem(TOKEN_KEY);
+    try {
+      await api
+        .get(`/quiz`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          // console.log('********THEN**********');
+          // console.log(res);
+          // console.log(res.data);
 
-                    const { items } = res.data;
-                    return items;
-                })
-                .catch((error) => {
-                    console.log('********CATCH**********');
-                    console.log(error);
-                    console.log('***********************');
-                });
-        } catch (error) {
-            console.log('*********ERROR*********');
-            console.log(error);
-        }
+          const { items } = res.data;
+          return items;
+        })
+        .catch((error) => {
+          console.log('********CATCH**********');
+          console.log(error);
+          console.log('***********************');
+        });
+    } catch (error) {
+      console.log('*********ERROR*********');
+      console.log(error);
     }
+  }
 
-    return (
-        <AuthContext.Provider
-            value={{
-                signed: !!user,
-                user,
-                loading,
-                signIn,
-                signOut,
-                registerUser,
-                listQuiz,
-            }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider
+      value={{
+        signed: !!user,
+        user,
+        loading,
+        signIn,
+        signOut,
+        registerUser,
+        listQuiz,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 function useAuth() {
-    const context = useContext(AuthContext);
+  const context = useContext(AuthContext);
 
-    if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider.');
-    }
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider.');
+  }
 
-    return context;
+  return context;
 }
 
 export { AuthProvider, useAuth };

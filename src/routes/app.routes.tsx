@@ -16,74 +16,63 @@ const { Navigator, Screen } = createBottomTabNavigator();
 const SimpleStack = createStackNavigator();
 
 function AppRoutes() {
-    const theme = useTheme();
+  const theme = useTheme();
 
-    return (
-        <Navigator
-            screenOptions={{
-                headerShown: false,
-                tabBarActiveTintColor: theme.colors.secondary,
-                tabBarInactiveTintColor: theme.colors.text,
-                tabBarLabelPosition: 'beside-icon',
-                tabBarStyle: {
-                    paddingVertical: Platform.OS === 'ios' ? 20 : 0,
-                    height: 88,
-                },
-            }}
-        >
-            <Screen
-                name='Listagem'
-                component={StackRoutes}
-                options={{
-                    tabBarIcon: ({ size, color }) => (
-                        <MaterialIcons
-                            name='format-list-bulleted'
-                            size={size}
-                            color={color}
-                        />
-                    ),
-                }}
+  return (
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: theme.colors.secondary,
+        tabBarInactiveTintColor: theme.colors.text,
+        tabBarLabelPosition: 'beside-icon',
+        tabBarStyle: {
+          paddingVertical: Platform.OS === 'ios' ? 20 : 0,
+          height: 88,
+        },
+      }}
+    >
+      <Screen
+        name='Listagem'
+        component={StackRoutes}
+        options={{
+          tabBarIcon: ({ size, color }) => (
+            <MaterialIcons
+              name='format-list-bulleted'
+              size={size}
+              color={color}
             />
-            <Screen
-                name='Cadastrar'
-                component={Register}
-                options={{
-                    tabBarIcon: ({ size, color }) => (
-                        <MaterialIcons
-                            name='note-add'
-                            size={size}
-                            color={color}
-                        />
-                    ),
-                }}
-            />
-            <Screen
-                name='Resumo'
-                component={Register}
-                options={{
-                    tabBarIcon: ({ size, color }) => (
-                        <MaterialIcons
-                            name='pie-chart'
-                            size={size}
-                            color={color}
-                        />
-                    ),
-                }}
-            />
-        </Navigator>
-    );
+          ),
+        }}
+      />
+      <Screen
+        name='Cadastrar'
+        component={Register}
+        options={{
+          tabBarIcon: ({ size, color }) => (
+            <MaterialIcons name='note-add' size={size} color={color} />
+          ),
+        }}
+      />
+      <Screen
+        name='Resumo'
+        component={Register}
+        options={{
+          tabBarIcon: ({ size, color }) => (
+            <MaterialIcons name='pie-chart' size={size} color={color} />
+          ),
+        }}
+      />
+    </Navigator>
+  );
 }
 
 function StackRoutes() {
-    return (
-        <SimpleStack.Navigator screenOptions={{ headerShown: false }}>
-            <SimpleStack.Screen name='Listagem' component={Dashboard} />
-            <SimpleStack.Screen
-                name='Questionnaires'
-                component={Questionnaires}
-            />
-        </SimpleStack.Navigator>
-    );
+  return (
+    <SimpleStack.Navigator screenOptions={{ headerShown: false }}>
+      <SimpleStack.Screen name='Listagem' component={Dashboard} />
+      <SimpleStack.Screen name='Questionnaires' component={Questionnaires} />
+    </SimpleStack.Navigator>
+  );
 }
 
 export { StackRoutes, AppRoutes };
