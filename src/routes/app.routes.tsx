@@ -11,6 +11,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { SignIn } from '../page/Login/SignIn';
 import { SignUp } from '../page/Login/SignUp';
+import { Quiz } from '../page/Quiz';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const SimpleStack = createStackNavigator();
@@ -70,6 +71,7 @@ function StackRoutes() {
   return (
     <SimpleStack.Navigator screenOptions={{ headerShown: false }}>
       <SimpleStack.Screen name='Listagem' component={Dashboard} />
+      <SimpleStack.Screen name='Quiz' component={Quiz} />
       <SimpleStack.Screen name='Questionnaires' component={Questionnaires} />
     </SimpleStack.Navigator>
   );

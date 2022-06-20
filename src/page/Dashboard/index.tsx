@@ -49,37 +49,37 @@ export function Dashboard() {
     navigation.navigate('Questionnaires', { quiz });
   }
 
-  async function listQuiz() {
-    const token = await getToken();
-    try {
-      await api
-        .get(`/quiz`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          console.log('********THEN**********');
-          console.log(res);
-          console.log(res.data);
-          const { items, meta } = res.data;
-          setToReceive(items);
-          return items;
-        })
-        .catch((error) => {
-          console.log('********CATCH**********');
-          console.log(error);
-          console.log('***********************');
-        });
-    } catch (error) {
-      console.log('*********ERROR*********');
-      console.log(error);
+    async function listQuiz() {
+      const token = await getToken();
+      try {
+        await api
+          .get(`/quiz`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            console.log('********THEN**********');
+            console.log(res);
+            console.log(res.data);
+            const { items, meta } = res.data;
+            setToReceive(items);
+            return items;
+          })
+          .catch((error) => {
+            console.log('********CATCH**********');
+            console.log(error);
+            console.log('***********************');
+          });
+      } catch (error) {
+        console.log('*********ERROR*********');
+        console.log(error);
+      }
     }
-  }
 
   useEffect(() => {
     const load = async () => {
-      await listQuiz();
+    await listQuiz();
     };
     load();
   }, []);

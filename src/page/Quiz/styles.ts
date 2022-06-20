@@ -90,3 +90,83 @@ export const Icon = styled(Feather)`
   color: ${({ theme }) => theme.colors.title};
   font-size: ${RFValue(24)}px;
 `;
+
+export const NextButton = styled.TouchableOpacity`
+  margin-top: 20px;
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.primary};
+  padding: 20px;
+  border-radius: 5px;
+`;
+
+export const TextNextButton = styled.Text`
+  font-size: ${RFValue(20)}px;
+  color: ${({ theme }) => theme.colors.title};
+  text-align: center;
+`;
+
+export const ScoreModal = styled.Modal``;
+
+export const ContainerModal = styled.View`
+  flex: 1;
+  background-color: ${({ theme }) => theme.colors.background};
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ViewModal = styled.View`
+  background-color: ${({ theme }) => theme.colors.secondary};
+  width: 90%;
+  border-radius: 20px;
+  padding: 20px;
+  align-items: center;
+`;
+
+export const ViewText = styled.Text`
+  font-size: ${RFValue(30)}px;
+  font-weight: bold;
+`;
+
+export const ScoreView = styled.View`
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 20px;
+`;
+
+export const QuestionsText = styled.Text`
+  font-size: 20px;
+  color: ${({ theme }) => theme.colors.text_dark};
+`;
+
+export const RetryText = styled.Text`
+  text-align: center;
+  color: ${({ theme }) => theme.colors.title};
+  font-size: ${RFValue(20)}px;
+`;
+
+export const Retry = styled.TouchableOpacity`
+  background-color: ${({ theme }) => theme.colors.primary};
+  padding: 20px;
+  width: 100%;
+  border-radius: 20px;
+`;
+
+export const ScoreText = styled.Text`
+  font-size: ${RFValue(30)}px;
+  color: ${({ theme, isActive }) =>
+    isActive ? theme.colors.success : theme.colors.attention};
+`;
+
+export const ProgressBar = styled.View`
+  width: 100%;
+  height: 20px;
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.colors.text_dark};
+`;
+
+export const ProgressBarAnimated = styled.View`
+  height: ${RFValue(20)}px;
+  border-radius: 20px;
+  /* background-color: '#3498db'; */
+`;

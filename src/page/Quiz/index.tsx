@@ -5,20 +5,32 @@ import {
   AreaView,
   Bar,
   Container,
+  ContainerModal,
   ContainerOptions,
   ContainerOptionsDiv,
   ContainerQuestion,
   CorrectOption,
   Icon,
+  NextButton,
   OptionSelected,
+  ProgressBar,
+  QuestionsText,
+  Retry,
+  RetryText,
+  ScoreModal,
+  ScoreText,
+  ScoreView,
   TextIndexQuestion,
+  TextNextButton,
   TextOptions,
   TextQuestion,
   TitleQuestion,
+  ViewModal,
   ViewQuestion,
+  ViewText,
 } from './styles';
-
 import data from '../../data/QuizData';
+import { Animated } from 'react-native';
 
 export function Quiz() {
   const allQuestions = data;
@@ -42,6 +54,42 @@ export function Quiz() {
     // Show Next Button
     setShowNextButton(true);
   }
+
+  function handleNext() {
+    if (currentQuestionIndex == allQuestions.length - 1) {
+      // Last Question
+      // Show Score Modal
+      setShowScoreModal(true);
+    } else {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setCurrentOptionSelected(null);
+      setCorrectOption(null);
+      setIsOptionsDisabled(false);
+      setShowNextButton(false);
+    }
+    Animated.timing(progress, {
+      toValue: currentQuestionIndex + 1,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  }
+
+  const restartQuiz = () => {
+    setShowScoreModal(false);
+
+    setCurrentQuestionIndex(0);
+    setScore(0);
+
+    setCurrentOptionSelected(null);
+    setCorrectOption(null);
+    setIsOptionsDisabled(false);
+    setShowNextButton(false);
+    Animated.timing(progress, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  };
 
   function renderQuestion() {
     return (
@@ -84,11 +132,49 @@ export function Quiz() {
     );
   }
 
+  function renderNextButton() {
+    if (showNextButton) {
+      return (
+        <NextButton onPress={handleNext}>
+          <TextNextButton>Next</TextNextButton>
+        </NextButton>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  const [progress, setProgress] = useState(new Animated.Value(0));
+  const progressAnim = progress.interpolate({
+    inputRange: [0, allQuestions.length],
+    outputRange: ['0%', '100%'],
+  });
+
+  function renderProgressBar() {
+    return (
+      <ProgressBar>
+        <Animated.View
+          style={[
+            {
+              height: 20,
+              borderRadius: 20,
+              backgroundColor: '#3498db',
+            },
+            {
+              width: progressAnim,
+            },
+          ]}
+        ></Animated.View>
+      </ProgressBar>
+    );
+  }
+
   return (
     <AreaView>
       <Bar />
       <Container>
         {/* ProgressBar */}
+        {renderProgressBar()}
 
         {/* Question */}
         {renderQuestion()}
@@ -97,6 +183,32 @@ export function Quiz() {
         {renderOptions()}
 
         {/* Next Button */}
+        {renderNextButton()}
+
+        {/* Score Modal */}
+        <ScoreModal
+          animationType='slide'
+          transparent={true}
+          visible={showScoreModal}
+        >
+          <ContainerModal>
+            <ViewModal>
+              <ViewText>
+                {score > allQuestions.length / 2 ? 'Congratulations!' : 'Oops!'}
+              </ViewText>
+              <ScoreView>
+                <ScoreText isActive={score > allQuestions.length / 2}>
+                  {score}
+                </ScoreText>
+                <QuestionsText>/ {allQuestions.length}</QuestionsText>
+              </ScoreView>
+              {/* Retry Quiz button */}
+              <Retry onPress={restartQuiz}>
+                <RetryText>Retry Quiz</RetryText>
+              </Retry>
+            </ViewModal>
+          </ContainerModal>
+        </ScoreModal>
 
         {/* Background Image */}
         {/* <Image

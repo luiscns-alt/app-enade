@@ -11,7 +11,7 @@ export const TOKEN_KEY = '@RNAuth:token';
 export const isAuthenticated = () => AsyncStorage.getItem(TOKEN_KEY) !== null;
 export const getToken = () => AsyncStorage.getItem(TOKEN_KEY);
 export const api = axios.create({
-  baseURL: 'http://10.0.0.8:3005',
+  baseURL: 'http://10.0.0.9:3005',
 });
 
 // api.interceptors.request.use(async (config) => {
@@ -107,7 +107,7 @@ const AuthProvider: React.FC = ({ children }) => {
   }
 
   async function listQuiz() {
-    const token = await AsyncStorage.getItem(TOKEN_KEY);
+    const token = await getToken();
     try {
       await api
         .get(`/quiz`, {
@@ -116,12 +116,13 @@ const AuthProvider: React.FC = ({ children }) => {
           },
         })
         .then((res) => {
-          // console.log('********THEN**********');
-          // console.log(res);
-          // console.log(res.data);
-
-          const { items } = res.data;
-          return items;
+          console.log('********THEN**********');
+          //   console.log(res);
+          //   console.log(res.data);
+          //   const { items, meta } = res.data;
+          //   setToReceive(items);
+          const data = res.data.items;
+          return data;
         })
         .catch((error) => {
           console.log('********CATCH**********');
