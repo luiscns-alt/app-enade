@@ -158,7 +158,7 @@ export function Quiz() {
             {
               height: 20,
               borderRadius: 20,
-              backgroundColor: '#3498db',
+              backgroundColor: '#8E7DBE',
             },
             {
               width: progressAnim,

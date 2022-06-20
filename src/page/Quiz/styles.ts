@@ -162,7 +162,7 @@ export const ProgressBar = styled.View`
   width: 100%;
   height: 20px;
   border-radius: 20px;
-  background-color: ${({ theme }) => theme.colors.text_dark};
+  background-color: ${({ theme }) => theme.colors.secondary};
 `;
 
 export const ProgressBarAnimated = styled.View`

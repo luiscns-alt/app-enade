@@ -18,6 +18,7 @@ import { TransactionList } from '../Dashboard/styles';
 import { Card } from '../../components/Card';
 import { getToken, useAuth } from '../../contexts/auth';
 import {
+    ContainerModal,
   ContainerOptions,
   ContainerOptionsDiv,
   ContainerQuestion,
@@ -25,12 +26,21 @@ import {
   Icon,
   NextButton,
   OptionSelected,
+  ProgressBar,
+  QuestionsText,
+  Retry,
+  RetryText,
+  ScoreModal,
+  ScoreText,
+  ScoreView,
   TextIndexQuestion,
   TextNextButton,
   TextOptions,
   TextQuestion,
   TitleQuestion,
+  ViewModal,
   ViewQuestion,
+  ViewText,
 } from '../Quiz/styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -125,6 +135,23 @@ export function Questionnaires() {
     }).start();
   }
 
+  const restartQuiz = () => {
+    setShowScoreModal(false);
+
+    setCurrentQuestionIndex(0);
+    setScore(0);
+
+    setCurrentOptionSelected(null);
+    setCorrectOption(null);
+    setIsOptionsDisabled(false);
+    setShowNextButton(false);
+    Animated.timing(progress, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  };
+
   function renderQuestion() {
     return (
       <ContainerQuestion>
@@ -185,6 +212,25 @@ export function Questionnaires() {
     outputRange: ['0%', '100%'],
   });
 
+  function renderProgressBar() {
+    return (
+      <ProgressBar>
+        <Animated.View
+          style={[
+            {
+              height: 20,
+              borderRadius: 20,
+              backgroundColor: '#3498db',
+            },
+            {
+              width: progressAnim,
+            },
+          ]}
+        ></Animated.View>
+      </ProgressBar>
+    );
+  }
+
   return (
     <Container>
       <Header>
@@ -195,6 +241,8 @@ export function Questionnaires() {
         {/* <Subject>{quiz.title}</Subject>
         <Title>{quiz.description}</Title> */}
         {/* <Title>{quiz.id}</Title> */}
+        {/* ProgressBar */}
+        {renderProgressBar()}
 
         {/* Question */}
         {renderQuestion()}
@@ -205,6 +253,33 @@ export function Questionnaires() {
         {/* Next Button */}
         {renderNextButton()}
 
+        {/* Score Modal */}
+        <ScoreModal
+          animationType='slide'
+          transparent={true}
+          visible={showScoreModal}
+        >
+          <ContainerModal>
+            <ViewModal>
+              <ViewText>
+                {score > allQuestions.length / 2 ? 'Congratulations!' : 'Oops!'}
+              </ViewText>
+              <ScoreView>
+                <ScoreText isActive={score > allQuestions.length / 2}>
+                  {score}
+                </ScoreText>
+                <QuestionsText>/ {allQuestions.length}</QuestionsText>
+              </ScoreView>
+              {/* Retry Quiz button */}
+              <Retry onPress={restartQuiz}>
+                <RetryText>Retry Quiz</RetryText>
+              </Retry>
+              <Retry onPress={handleBack}>
+                <RetryText>Back</RetryText>
+              </Retry>
+            </ViewModal>
+          </ContainerModal>
+        </ScoreModal>
       </Content>
     </Container>
   );
