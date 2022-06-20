@@ -108,10 +108,10 @@ export function Questionnaires() {
     setCorrectOption(true);
     setCurrentOptionSelected(selectedOption);
     setIsOptionsDisabled(true);
-    // if (selectedOption == correct_option) {
-    //   // Set Score
-    //   setScore(score + 1);
-    // }
+    if (selectedOption.isCorrect == true) {
+      // Set Score
+      setScore(score + 1);
+    }
     // Show Next Button
     setShowNextButton(true);
   }
@@ -274,7 +274,7 @@ export function Questionnaires() {
               <Retry onPress={restartQuiz}>
                 <RetryText>Retry Quiz</RetryText>
               </Retry>
-              <Retry onPress={handleBack}>
+              <Retry style={{ marginTop: 10 }} onPress={handleBack}>
                 <RetryText>Back</RetryText>
               </Retry>
             </ViewModal>
