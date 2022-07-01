@@ -18,7 +18,7 @@ import { TransactionList } from '../Dashboard/styles';
 import { Card } from '../../components/Card';
 import { getToken, useAuth } from '../../contexts/auth';
 import {
-    ContainerModal,
+  ContainerModal,
   ContainerOptions,
   ContainerOptionsDiv,
   ContainerQuestion,
@@ -157,7 +157,7 @@ export function Questionnaires() {
       <ContainerQuestion>
         {/* Question Counter */}
         <ViewQuestion>
-          <TextQuestion>{currentQuestionIndex + 1} </TextQuestion>
+          <TextQuestion>Question {currentQuestionIndex + 1} </TextQuestion>
           <TextIndexQuestion>/ {allQuestions.length}</TextIndexQuestion>
         </ViewQuestion>
 
@@ -173,7 +173,10 @@ export function Questionnaires() {
     return (
       <ContainerOptions>
         {allQuestions[currentQuestionIndex]?.options.map((option) => (
-          <TouchableOpacity onPress={() => validateAnswer(option)} key={option.id}>
+          <TouchableOpacity
+            onPress={() => validateAnswer(option)}
+            key={option.id}
+          >
             {/* <TouchableOpacity> */}
             <ContainerOptionsDiv>
               <TextOptions>{option.text}</TextOptions>

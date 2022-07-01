@@ -78,14 +78,14 @@ export const Transactions = styled.View`
   flex: 1%;
   padding: 0 14px;
 
-  margin-top: ${RFPercentage(-34)}px;
+  margin-top: ${RFPercentage(-30)}px;
 `;
 
 export const Title = styled.Text`
   font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 
-  margin-bottom: 16px;
+  margin-bottom: ${RFValue(18)}px;
 `;
 
 export const TransactionList = styled(
