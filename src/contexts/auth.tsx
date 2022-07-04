@@ -64,8 +64,6 @@ const AuthProvider: React.FC = ({ children }) => {
       const response = await api
         .post(`/auth/login`, data)
         .then((res) => {
-          console.log(res);
-          console.log(res.data);
           const token = res.data.access_token;
 
           setUser(token);
@@ -89,8 +87,6 @@ const AuthProvider: React.FC = ({ children }) => {
       const response = await api
         .post(`/user/register`, params)
         .then((res) => {
-          console.log(res);
-          console.log(res.data);
           if (res && res.data && res.data.access_token) {
             const token = res.data.access_token;
 
@@ -116,21 +112,13 @@ const AuthProvider: React.FC = ({ children }) => {
           },
         })
         .then((res) => {
-          console.log('********THEN**********');
-          //   console.log(res);
-          //   console.log(res.data);
-          //   const { items, meta } = res.data;
-          //   setToReceive(items);
           const data = res.data.items;
           return data;
         })
         .catch((error) => {
-          console.log('********CATCH**********');
           console.log(error);
-          console.log('***********************');
         });
     } catch (error) {
-      console.log('*********ERROR*********');
       console.log(error);
     }
   }

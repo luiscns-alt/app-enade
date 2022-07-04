@@ -1,22 +1,11 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Animated, FlatList, Text } from 'react-native';
+import { Animated } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { BackButton } from '../../components/BackButton';
+import { getToken } from '../../contexts/auth';
 import { questionsDTO } from '../../dtos/questionsDTO';
-
-import {
-  CarImages,
-  Container,
-  Content,
-  Header,
-  Subject,
-  Title,
-} from './styles';
 import { api } from '../../services/api';
-import { TransactionCard } from '../../components/TransactionCard';
-import { TransactionList } from '../Dashboard/styles';
-import { Card } from '../../components/Card';
-import { getToken, useAuth } from '../../contexts/auth';
 import {
   ContainerModal,
   ContainerOptions,
@@ -42,7 +31,7 @@ import {
   ViewQuestion,
   ViewText,
 } from '../Quiz/styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { CarImages, Container, Content, Header } from './styles';
 
 interface Params {
   quiz: questionsDTO;
@@ -53,7 +42,7 @@ export function Questionnaires() {
   const route = useRoute();
   const { quiz } = route.params as Params;
 
-  const [questionnaires, setQuestionnaires] = useState<questionsDTO[]>([]);
+  const [questionnaires, setQuestionnaires] = useState<questionsDTO[]>();
 
   function handleBack() {
     navigation.goBack();
@@ -69,28 +58,85 @@ export function Questionnaires() {
           },
         })
         .then((res) => {
-          console.log('********THEN**********');
-          console.log(res);
-          console.log(res.data.questions);
           setAllQuestions(res.data.questions);
-          //   const { items, meta } = res.data;
-          //  setToReceive(items);
-          //   return items;
         })
         .catch((error) => {
-          console.log('********CATCH**********');
           console.log(error);
-          console.log('***********************');
         });
     } catch (error) {
-      console.log('*********ERROR*********');
       console.log(error);
+    }
+  }
+
+  async function getUser() {
+    const token = await getToken();
+    try {
+      await api
+        .get(`/auth/user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          const data = res.data;
+          const { email, name } = data;
+          createStudent(name, email);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (errors) {
+      console.log(errors);
+    }
+  }
+
+  const [student, setStudent] = useState({});
+  async function createStudent(name: string, email: string) {
+    try {
+      await api
+        .post(`/student`, { name: name, email: email })
+        .then((res) => {
+          const idStudent = res.data.id;
+          setStudent(idStudent);
+          console.log('Successfully created student', res.data);
+        })
+        .catch((error) => {
+          console.log('Error creating student', error);
+        });
+    } catch (errors) {
+      console.log('errors', errors);
+    }
+  }
+
+  async function postAnswer(data: any) {
+      /**
+       * * Salvar titulo da questão
+       */
+    const question = allQuestions[currentQuestionIndex]?.question;
+    const { isCorrect, text } = data;
+    try {
+      await api
+        .post(`/answer`, {
+          studentId: student,
+          question: question,
+          answer: text,
+          isCorrect: isCorrect,
+        })
+        .then((res) => {
+          console.log('Successfully', res.data);
+        })
+        .catch((error) => {
+          console.log('Error', error);
+        });
+    } catch (errors) {
+      console.log(errors);
     }
   }
 
   useEffect(() => {
     const load = async () => {
       await listQuiz();
+      await getUser();
     };
     load();
   }, []);
@@ -105,6 +151,7 @@ export function Questionnaires() {
   const [showScoreModal, setShowScoreModal] = useState(false);
 
   function validateAnswer(selectedOption) {
+    postAnswer(selectedOption);
     setCorrectOption(true);
     setCurrentOptionSelected(selectedOption);
     setIsOptionsDisabled(true);
@@ -175,6 +222,7 @@ export function Questionnaires() {
         {allQuestions[currentQuestionIndex]?.options.map((option) => (
           <TouchableOpacity
             onPress={() => validateAnswer(option)}
+            disabled={isOptionsDisabled}
             key={option.id}
           >
             {/* <TouchableOpacity> */}

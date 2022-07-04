@@ -59,20 +59,14 @@ export function Dashboard() {
             },
           })
           .then((res) => {
-            console.log('********THEN**********');
-            console.log(res);
-            console.log(res.data);
             const { items, meta } = res.data;
             setToReceive(items);
             return items;
           })
           .catch((error) => {
-            console.log('********CATCH**********');
             console.log(error);
-            console.log('***********************');
           });
       } catch (error) {
-        console.log('*********ERROR*********');
         console.log(error);
       }
     }
